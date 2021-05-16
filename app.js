@@ -5,7 +5,7 @@ const momentTimeZone = require('moment-timezone');
 momentTimeZone.tz.setDefault('Australia/Melbourne');
 
 const path = require('path');
-const helloRouter = require('./routes/helloRoutes');
+const recommendationRoutes = require('./routes/recommendationRoutes');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 
@@ -35,7 +35,7 @@ app.use((req, res, next) => {
   }
   console.log(`Req method:${method}`);
   console.log(`Req pathname:${pathname}`);
-  console.log(JSON.stringify(content));
+  // console.log(JSON.stringify(content));
   next();
 });
 
@@ -45,7 +45,7 @@ Routes
 app.get('/', (req, res) => {
   res.status(200).render('base');
 });
-app.use('/api/v1/hello', helloRouter);
+app.use('/api/v1/recommendation', recommendationRoutes);
 
 app.all('*', (req, res, next) => {
   // res.status(200).render('base');
