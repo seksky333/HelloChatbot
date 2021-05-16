@@ -1,0 +1,48 @@
+{
+  "name": "hellochatbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start:dev": "nodemon server.js",
+    "start:prod": "NODE_ENV=production nodemon server.js",
+    "debug": "ndb server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seksky333/HelloChatbot.git"
+  },
+  "author": "Chester Sek",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seksky333/HelloChatbot/issues"
+  },
+  "homepage": "https://github.com/seksky333/HelloChatbot#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "prettier": "^1.19.1"
+  },
+  "dependencies": {
+    "apisauce": "^2.0.0",
+    "bcrypt": "^5.0.0",
+    "dotenv": "^7.0.0",
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.32",
+    "mongoose": "^5.11.1",
+    "multer": "^1.4.1",
+    "pug": "^3.0.2",
+    "request": "^2.88.2",
+    "sharp": "^0.27.2"
+  },
+  "engines": {
+    "node": ">10.0.0"
+  }
+}
