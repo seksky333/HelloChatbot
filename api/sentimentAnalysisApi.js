@@ -1,4 +1,3 @@
-const FormData = require('form-data');
 const request = require('request');
 
 exports.getSentimentAnalysis = async textVal => {

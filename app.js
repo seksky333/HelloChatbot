@@ -5,6 +5,7 @@ const momentTimeZone = require('moment-timezone');
 momentTimeZone.tz.setDefault('Australia/Melbourne');
 
 const path = require('path');
+const historyController = require('./controllers/historyController');
 const recommendationRoutes = require('./routes/recommendationRoutes');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
@@ -80,5 +81,8 @@ app.use((err, req, res, next) => {
 });
 
 app.use(globalErrorHandler);
-
+//reset all the historical data in the storage
+historyController.reset();
+//import and load restaurant history data to the server-side data storage
+historyController.loadEatOutHistoryData();
 module.exports = app;

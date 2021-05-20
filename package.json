@@ -33,6 +33,7 @@
     "@googlemaps/google-maps-services-js": "^3.1.16",
     "apisauce": "^2.0.0",
     "bcrypt": "^5.0.0",
+    "collaborative-filter": "^1.0.0-beta.3",
     "dotenv": "^7.0.0",
     "express": "^4.17.1",
     "form-data": "^4.0.0",
@@ -42,7 +43,8 @@
     "multer": "^1.4.1",
     "pug": "^3.0.2",
     "request": "^2.88.2",
-    "sharp": "^0.27.2"
+    "sharp": "^0.27.2",
+    "store": "^2.0.12"
   },
   "engines": {
     "node": ">10.0.0"
