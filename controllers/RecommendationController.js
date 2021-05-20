@@ -66,7 +66,7 @@ exports.getSentimentAnalysis = async (req, res) => {
 exports.getPlaces = async (req, res) => {
   const coordinate = { lat: -42.867133, lng: 147.311423 };
   const type = 'restaurant';
-  const keyword = 'Two people a restaurant a dinner';
+  const keyword = 'Peacock and Jones';
   //done by sentiment analysis
   const isHappy = true;
   /*
@@ -118,6 +118,7 @@ exports.getClassification = async (req, res) => {
 
 exports.getRecommendation = async (req, res) => {
   const userCoordinate = { lat: -42.867133, lng: 147.311423 };
+  const canTravelFar = true;
   const { feeling, cuisinePreference, numberOfPeople, typeOfMeal } = req.query;
 
   const isHappy = await sentimentController.getSentimentAnalysis(feeling);
@@ -137,18 +138,63 @@ exports.getRecommendation = async (req, res) => {
   if not happy pick the friends' chosen restaurant 
   */
   if (isHappy)
-    recommendation = await placeController.getPlaces(
+    recommendation = await placeController.getPlace(
       userCoordinate,
       searchTerm,
-      isHappy
+      canTravelFar
     );
   else recommendation = await classificationController.getClassification();
+
+  const recommendationDetails = await placeController.getPlaceByName(
+    userCoordinate,
+    recommendation
+  );
 
   try {
     res.status(200).json({
       status: 'success',
       requestedAt: req.requestTime,
-      recommendation
+      recommendation,
+      recommendationDetails
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err.message
+    });
+  }
+};
+
+exports.getMoreRecommendations = async (req, res) => {
+  const userCoordinate = { lat: -42.867133, lng: 147.311423 };
+  const canTravelFar = false;
+  const { cuisinePreference, numberOfPeople, typeOfMeal } = req.query;
+
+  const cuisinePref = await nounChunksController.getNounChuncksExtraction(
+    cuisinePreference
+  );
+  const peopeleSize = await nounChunksController.getNounChuncksExtraction(
+    numberOfPeople
+  );
+  const mealType = await nounChunksController.getNounChuncksExtraction(
+    typeOfMeal
+  );
+  const searchTerm = `${peopeleSize} ${cuisinePref} ${mealType}`;
+  /*
+  if happy pick the best rated restaurant
+  if not happy pick the friends' chosen restaurant 
+  */
+  const recommendations = await placeController.getPlaces(
+    userCoordinate,
+    searchTerm,
+    canTravelFar
+  );
+
+  try {
+    res.status(200).json({
+      status: 'success',
+      requestedAt: req.requestTime,
+      recommendations
     });
   } catch (err) {
     res.status(400).json({

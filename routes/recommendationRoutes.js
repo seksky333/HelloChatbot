@@ -12,5 +12,8 @@ router
 router.route('/place').get(recommendationController.getPlaces);
 router.route('/classification').get(recommendationController.getClassification);
 router.route('/recommendation').get(recommendationController.getRecommendation);
+router
+  .route('/moreRecommendations')
+  .get(recommendationController.getMoreRecommendations);
 
 module.exports = router;

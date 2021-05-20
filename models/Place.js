@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 
 exports.getHighRatingPlaces = async places => {
+  console.log(places);
   return new Promise((resolve, reject) => {
     const placeList = [];
     try {
@@ -10,7 +11,9 @@ exports.getHighRatingPlaces = async places => {
           const ratedPlace = {
             name: place.name,
             rating: place.rating,
-            user_ratings_total: place.user_ratings_total
+            user_ratings_total: place.user_ratings_total,
+            address: place.vicinity,
+            photos: place.photos
           };
           placeList.push(ratedPlace);
         }
