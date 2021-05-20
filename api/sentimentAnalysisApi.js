@@ -23,7 +23,6 @@ exports.getSentimentAnalysis = async textVal => {
           reject(e);
         } else {
           const responseJson = JSON.parse(body);
-          console.log(responseJson);
           resolve(responseJson);
         }
       }

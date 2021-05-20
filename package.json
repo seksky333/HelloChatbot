@@ -30,6 +30,7 @@
     "prettier": "^1.19.1"
   },
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.1.16",
     "apisauce": "^2.0.0",
     "bcrypt": "^5.0.0",
     "dotenv": "^7.0.0",
