@@ -118,3 +118,4 @@ config.env
 hereApiToken.txt
 
 public/img/users/
+config.env.bak

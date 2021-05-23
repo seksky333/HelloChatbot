@@ -1,7 +1,8 @@
 const request = require('request');
+const keyController = require('../controllers/keyController');
 
 exports.getSentimentAnalysis = async textVal => {
-  const apiKey = process.env.RAPID_API_KEY;
+  const apiKey = keyController.getRapidAPIKey();
   return new Promise((resolve, reject) => {
     request.post(
       {

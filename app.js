@@ -8,6 +8,7 @@ const path = require('path');
 const historyController = require('./controllers/historyController');
 const recommendationRoutes = require('./routes/recommendationRoutes');
 const globalErrorHandler = require('./controllers/errorController');
+const encryptionController = require('./controllers/encryptionController');
 const AppError = require('./utils/appError');
 
 const app = express();
@@ -50,21 +51,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use((req, res, next) => {
-  const { method, body, query } = req;
-  const { pathname } = req._parsedUrl;
-  let content = '';
-  if (body.constructor === Object && Object.keys(body).length !== 0) {
-    content = JSON.stringify(body);
-  } else {
-    content = query;
-  }
-  console.log(`Req method:${method}`);
-  console.log(`Req pathname:${pathname}`);
-  // console.log(JSON.stringify(content));
-  next();
-});
-
 /*
 Routes
 */
@@ -74,11 +60,6 @@ app.get('/', (req, res) => {
 app.use('/api/v1/recommendation', recommendationRoutes);
 
 app.all('*', (req, res, next) => {
-  // res.status(200).render('base');
-  // res.status(404).json({
-  //   status: 'fail',
-  //   message: `Can't find ${req.originalUrl} on this server!`
-  // });
   next(
     new AppError(`Undefined page ${req.originalUrl} not on this server!`, 404)
   );

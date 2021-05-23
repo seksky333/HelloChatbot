@@ -4,26 +4,12 @@ const nounChunksApi = require('../api/nounChunksExtractionApi');
 const sentimentController = require('./sentimentAnalysisController');
 const nounChunksController = require('./nounChunksController');
 const classificationController = require('./classificationController');
+const keyController = require('./keyController');
 const placeController = require('./placeController');
 const placeApi = require('../api/placeApi');
 const place = require('../models/Place');
 
 const historyController = require('./historyController');
-
-exports.getHello = async (req, res) => {
-  try {
-    res.status(200).json({
-      status: 'success',
-      requestedAt: req.requestTime,
-      message: 'Hello World'
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message
-    });
-  }
-};
 
 exports.getNounChuncksExtraction = async (req, res) => {
   const response = await nounChunksApi.getNounChuncksExtraction(
@@ -117,45 +103,86 @@ exports.getClassification = async (req, res) => {
 };
 
 exports.getRecommendation = async (req, res) => {
-  const userCoordinate = { lat: -42.867133, lng: 147.311423 };
   const canTravelFar = true;
-  const { feeling, cuisinePreference, numberOfPeople, typeOfMeal } = req.query;
-
-  const isHappy = await sentimentController.getSentimentAnalysis(feeling);
-  const cuisinePref = await nounChunksController.getNounChuncksExtraction(
-    cuisinePreference
-  );
-  const peopeleSize = await nounChunksController.getNounChuncksExtraction(
-    numberOfPeople
-  );
-  const mealType = await nounChunksController.getNounChuncksExtraction(
+  const {
+    coordinate,
+    feeling,
+    cuisinePreference,
+    numberOfPeople,
     typeOfMeal
-  );
-  const searchTerm = `${peopeleSize} ${cuisinePref} ${mealType}`;
-  let recommendation;
-  /*
+  } = req.query;
+  //if coordinate is not give, default location will be used
+  const userCoordinate =
+    coordinate != null ? coordinate : { lat: -42.867133, lng: 147.311423 };
+
+  try {
+    const isHappy = await sentimentController.getSentimentAnalysis(feeling);
+    const cuisinePref = await nounChunksController.getNounChuncksExtraction(
+      cuisinePreference
+    );
+    const peopeleSize = await nounChunksController.getNounChuncksExtraction(
+      numberOfPeople
+    );
+    const mealType = await nounChunksController.getNounChuncksExtraction(
+      typeOfMeal
+    );
+    const searchTerm = `${peopeleSize} ${cuisinePref} ${mealType}`;
+    let recommendation;
+    /*
   if happy pick the best rated restaurant
   if not happy pick the friends' chosen restaurant 
   */
-  if (isHappy)
-    recommendation = await placeController.getPlace(
+    if (isHappy)
+      recommendation = await placeController.getPlace(
+        userCoordinate,
+        searchTerm,
+        canTravelFar
+      );
+    else recommendation = await classificationController.getClassification();
+
+    const recommendationDetails = await placeController.getPlaceByName(
       userCoordinate,
-      searchTerm,
-      canTravelFar
+      recommendation
     );
-  else recommendation = await classificationController.getClassification();
 
-  const recommendationDetails = await placeController.getPlaceByName(
-    userCoordinate,
-    recommendation
-  );
-
-  try {
     res.status(200).json({
       status: 'success',
       requestedAt: req.requestTime,
       recommendation,
       recommendationDetails
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(400).json({
+      status: 'fail',
+      message: err.message
+    });
+  }
+};
+
+exports.getMoreRecommendations = async (req, res) => {
+  const canTravelFar = false;
+  const { coordinate } = req.query;
+  try {
+    //if coordinate is not give, default location will be used
+    const userCoordinate =
+      coordinate != null ? coordinate : { lat: -42.867133, lng: 147.311423 };
+
+    const searchTerm = `restaurants`;
+    /*
+  if happy pick the best rated restaurant
+  if not happy pick the friends' chosen restaurant 
+  */
+    const recommendations = await placeController.getPlaces(
+      userCoordinate,
+      searchTerm,
+      canTravelFar
+    );
+
+    res.status(200).json({
+      status: 'success',
+      requestedAt: req.requestTime,
+      recommendations
     });
   } catch (err) {
     res.status(400).json({
@@ -165,36 +192,14 @@ exports.getRecommendation = async (req, res) => {
   }
 };
 
-exports.getMoreRecommendations = async (req, res) => {
-  const userCoordinate = { lat: -42.867133, lng: 147.311423 };
-  const canTravelFar = false;
-  const { cuisinePreference, numberOfPeople, typeOfMeal } = req.query;
-
-  const cuisinePref = await nounChunksController.getNounChuncksExtraction(
-    cuisinePreference
-  );
-  const peopeleSize = await nounChunksController.getNounChuncksExtraction(
-    numberOfPeople
-  );
-  const mealType = await nounChunksController.getNounChuncksExtraction(
-    typeOfMeal
-  );
-  const searchTerm = `${peopeleSize} ${cuisinePref} ${mealType}`;
-  /*
-  if happy pick the best rated restaurant
-  if not happy pick the friends' chosen restaurant 
-  */
-  const recommendations = await placeController.getPlaces(
-    userCoordinate,
-    searchTerm,
-    canTravelFar
-  );
+exports.getAPIKey = async (req, res) => {
+  const apiKey = keyController.getGoogleAPIKey();
 
   try {
     res.status(200).json({
       status: 'success',
       requestedAt: req.requestTime,
-      recommendations
+      apiKey
     });
   } catch (err) {
     res.status(400).json({

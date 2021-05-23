@@ -1,8 +1,10 @@
 const { Client } = require('@googlemaps/google-maps-services-js');
+const keyController = require('../controllers/keyController');
 
 exports.getPlaces = async (coordinate, travelDistance, type, keyword) => {
   const client = new Client({});
-  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+
+  const apiKey = keyController.getGoogleAPIKey();
   return new Promise((resolve, reject) => {
     client
       .placesNearby({
@@ -29,7 +31,7 @@ exports.getPlaces = async (coordinate, travelDistance, type, keyword) => {
 
 exports.getPlaceByName = async (coordinate, type, keyword) => {
   const client = new Client({});
-  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+  const apiKey = keyController.getGoogleAPIKey();
   return new Promise((resolve, reject) => {
     client
       .placesNearby({

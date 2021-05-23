@@ -32,7 +32,7 @@
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.1.16",
     "apisauce": "^2.0.0",
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "collaborative-filter": "^1.0.0-beta.3",
     "dotenv": "^7.0.0",
     "express": "^4.17.1",

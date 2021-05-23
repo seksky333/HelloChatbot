@@ -4,7 +4,6 @@ const recommendationController = require('../controllers/recommendationControlle
 
 const router = express.Router();
 
-router.route('/hello').get(recommendationController.getHello);
 router.route('/sentiment').get(recommendationController.getSentimentAnalysis);
 router
   .route('/nounChunks')
@@ -15,5 +14,7 @@ router.route('/recommendation').get(recommendationController.getRecommendation);
 router
   .route('/moreRecommendations')
   .get(recommendationController.getMoreRecommendations);
+
+router.route('/getAPIKey').get(recommendationController.getAPIKey);
 
 module.exports = router;

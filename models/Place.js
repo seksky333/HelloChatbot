@@ -1,7 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 
 exports.getHighRatingPlaces = async places => {
-  console.log(places);
   return new Promise((resolve, reject) => {
     const placeList = [];
     try {
@@ -28,7 +27,7 @@ exports.getHighRatingPlaces = async places => {
       popularPlaces.sort(function(a, b) {
         return b.rating - a.rating;
       });
-      //get the first 3 items
+      //get the first 5 items
       const bestPlaces = popularPlaces.slice(0, 5);
       resolve(bestPlaces);
     } catch (e) {
