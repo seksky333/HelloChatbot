@@ -7,6 +7,7 @@ exports.getHighRatingPlaces = async places => {
       for (const key in places) {
         if (Object.hasOwnProperty.call(places, key)) {
           const place = places[key];
+
           const ratedPlace = {
             name: place.name,
             rating: place.rating,
@@ -17,6 +18,7 @@ exports.getHighRatingPlaces = async places => {
           placeList.push(ratedPlace);
         }
       }
+
       //sort by user ratings total
       placeList.sort(function(a, b) {
         return b.user_ratings_total - a.user_ratings_total;

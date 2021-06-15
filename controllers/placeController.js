@@ -16,7 +16,11 @@ exports.getPlace = async (coordinate, searchTerm, canTravelFar) => {
   );
   const bestRestaurants = await place.getHighRatingPlaces(response);
   //returning the best restaurant's name
-  return bestRestaurants[0].name;
+  if (bestRestaurants.length === 0) {
+    throw new Error('Find no restaurants based on the provided search terms');
+  } else {
+    return bestRestaurants[0].name;
+  }
 };
 
 exports.getPlaceByName = async (coordinate, searchTerm) => {

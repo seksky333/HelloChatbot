@@ -66,7 +66,8 @@ exports.getPlaces = async (req, res) => {
     type,
     keyword
   );
-  const bestRestaurants = await place.getHighRatingPlaces(response);
+  const bestRestaurants = [];
+  // const bestRestaurants = await place.getHighRatingPlaces(response);
 
   try {
     res.status(200).json({
