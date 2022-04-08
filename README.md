@@ -5,7 +5,8 @@ A Node.JS API backend for supporting the frontend to recommend a suitable restau
 - Even there are many resources online about different restaurants. People are still struggle to decide which restaurant to go to in a timely manner.
 - 2.2 Solution Overview
 - This chat bot solution is aimed to help people to spend less time in selecting a right restaurant by recommending ones for them, and the solution is built and combined with user-based collaborative filter, sentimental analysis, restaurant data and ratings from Google Place API.
-- 2.3 Application Flow![image](https://user-images.githubusercontent.com/5713772/162547361-74befcd1-c026-4921-ac0c-ff2ad4bfe736.png)
+- 2.3 Application Flow<img width="224" alt="image" src="https://user-images.githubusercontent.com/5713772/162547415-7cd54931-e69b-4d49-99e5-f4162be0d209.png">
+
 
 
 3.	Used Resources
