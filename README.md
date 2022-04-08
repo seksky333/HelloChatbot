@@ -1,10 +1,12 @@
 # HelloChatbot
 A Node.JS API backend for supporting the frontend to recommend a suitable restaurant to a user by using basic AI techniques.  
 
-2.1 Problem Statement
-Even there are many resources online about different restaurants. People are still struggle to decide which restaurant to go to in a timely manner.
-2.2 Solution Overview
-This chat bot solution is aimed to help people to spend less time in selecting a right restaurant by recommending ones for them, and the solution is built and combined with user-based collaborative filter, sentimental analysis, restaurant data and ratings from Google Place API.
+- 2.1 Problem Statement
+- Even there are many resources online about different restaurants. People are still struggle to decide which restaurant to go to in a timely manner.
+- 2.2 Solution Overview
+- This chat bot solution is aimed to help people to spend less time in selecting a right restaurant by recommending ones for them, and the solution is built and combined with user-based collaborative filter, sentimental analysis, restaurant data and ratings from Google Place API.
+- 2.3 Application Flow![image](https://user-images.githubusercontent.com/5713772/162547361-74befcd1-c026-4921-ac0c-ff2ad4bfe736.png)
+
 
 3.	Used Resources
 3.1 APIs
